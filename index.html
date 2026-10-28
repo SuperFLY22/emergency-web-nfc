@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#090d16" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>비상장비 스마트 Web NFC 매니저</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
+    />
+    <link rel="stylesheet" href="/src/styles/main.css" />
+  </head>
+  <body>
+    <div class="app-wrapper">
+      <!-- 헤더 -->
+      <header class="app-header">
+        <div class="header-top">
+          <div class="logo-group">
+            <span class="logo-icon">🛡️</span>
+            <div>
+              <h1 class="logo-title">비상장비 NFC 매니저</h1>
+              <p class="logo-sub">스마트 시설안전 점검 플랫폼</p>
+            </div>
+          </div>
+          <div id="envBadge" class="status-pill status-loading">환경 점검 중...</div>
+        </div>
+
+        <!-- 탭 네비게이션 -->
+        <nav class="tab-nav" role="tablist">
+          <button id="tabAdminBtn" class="tab-btn active" role="tab" aria-selected="true">
+            <span class="tab-icon">✍️</span>
+            <span>관리자 쓰기 (Admin)</span>
+          </button>
+          <button id="tabInspectorBtn" class="tab-btn" role="tab" aria-selected="false">
+            <span class="tab-icon">🔍</span>
+            <span>점검자 읽기 (Scan)</span>
+          </button>
+        </nav>
+      </header>
+
+      <!-- 테스트 시 주의사항 콜아웃 배너 (포트 포워딩 & HTTPS 안내) -->
+      <div id="securityNoticeBanner" class="security-banner">
+        <div class="banner-header">
+          <span class="banner-icon">💡</span>
+          <span class="banner-title">안드로이드 테스트 시 필독 주의사항</span>
+          <button type="button" id="dismissNoticeBtn" class="banner-close" aria-label="닫기">×</button>
+        </div>
+        <div class="banner-body">
+          <p>
+            로컬 PC에서 안드로이드 폰으로 접속할 때 사설 IP(예: <code>192.168.x.x</code>)로 접속하면
+            <strong>Web NFC 보안 정책(HTTPS 필수)</strong>에 의해 API가 차단됩니다.
+          </p>
+          <div class="guide-box">
+            <strong>권장 해결책 (2가지):</strong>
+            <ol>
+              <li>
+                <strong>Chrome DevTools Port Forwarding (추천)</strong>: 안드로이드 폰과 PC를 USB로 연결 후,
+                PC 크롬에서 <code>chrome://inspect/#devices</code> 접속 &rarr; <code>5173</code> 포트포워딩 설정 &rarr;
+                폰 크롬에서 <code>http://localhost:5173</code> 접속 (보안 권한 즉시 통과)
+              </li>
+              <li>
+                <strong>Vercel 배포</strong>: Vercel로 배포하여 생성된 <code>https://...</code> 도메인으로 접속
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- 메인 콘텐츠 영역 -->
+      <main class="app-main">
+        <!-- 탭 1: 관리자 쓰기 뷰 -->
+        <section id="adminContainer" class="tab-content" role="tabpanel"></section>
+
+        <!-- 탭 2: 점검자 읽기 뷰 -->
+        <section id="inspectorContainer" class="tab-content hidden" role="tabpanel"></section>
+
+        <!-- 실시간 시스템 로그 뷰 -->
+        <section id="loggerContainer" class="logger-section"></section>
+      </main>
+
+      <!-- 푸터 -->
+      <footer class="app-footer">
+        <p>Emergency Equipment NFC Manager &bull; Web NFC (W3C Standard) &bull; Vite + TypeScript</p>
+      </footer>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
